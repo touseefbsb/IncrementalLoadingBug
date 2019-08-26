@@ -1,7 +1,6 @@
 ﻿using IncrementalLoadingBug.Helpers;
 using IncrementalLoadingBug.Models;
 using Microsoft.Toolkit.Uwp;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,11 +20,6 @@ namespace IncrementalLoadingBug.ViewModels
 
         public async Task LoadDataAsync()
         {
-            await LoadModulesConfiguration();
-        }
-
-        public async Task LoadModulesConfiguration()
-        {
             await Task.Delay(200);//fake web api call
 
             List<ModulesConfigurationDto> result = new List<ModulesConfigurationDto> {
@@ -40,7 +34,7 @@ namespace IncrementalLoadingBug.ViewModels
 
                 foreach (ModulesConfigurationDto item in evidencesConfigurationList)
                 {
-                    item.Evidences = new IncrementalLoadingCollection<EvidencesSource, EvidenceDTO>(itemsPerPage: 0);
+                    item.Evidences = new IncrementalLoadingCollection<EvidencesSource, EvidenceDTO>();
                 }
                 EvidencesConfigurationList.AddRange(evidencesConfigurationList);
             }

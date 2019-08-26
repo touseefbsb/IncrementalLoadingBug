@@ -14,7 +14,7 @@ namespace IncrementalLoadingBug.Models
         {
             var evidences = new List<EvidenceDTO>();
             await Task.Delay(500); // fake web api call
-            evidences.Add(new EvidenceDTO { Agency = "abc", AudioCount = 0, BarCodeNumber = "123" });
+            evidences.Add(new EvidenceDTO ());
             return evidences;
         }
     }
