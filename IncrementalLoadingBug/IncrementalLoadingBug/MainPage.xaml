@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="IncrementalLoadingBug.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="using:IncrementalLoadingBug.ViewModels"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+        <ic:EventTriggerBehavior EventName="UnLoaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnLoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+
+    <Grid x:DefaultBindMode="OneWay">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GridView
+            x:Name="TopListView"
+            ItemsSource="{x:Bind ViewModel.AppVM.EvidencesConfigurationList}"
+            SelectedItem="{x:Bind ViewModel.AppVM.TopListViewItem, Mode=TwoWay}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:ModulesConfigurationDto">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{x:Bind QueryCount}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Text="{x:Bind DisplayName}" />
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <ListView
+            x:Name="AllEvidencesListView"
+            Grid.Row="1"
+            Header="{x:Bind ViewModel.AppVM.TopListViewItem.DisplayName}"
+            ItemsSource="{x:Bind ViewModel.AppVM.TopListViewItem.Evidences}" />
+    </Grid>
+</Page>
