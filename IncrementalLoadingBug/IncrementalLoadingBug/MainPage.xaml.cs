@@ -1,5 +1,8 @@
-﻿using IncrementalLoadingBug.ViewModels;
+﻿using IncrementalLoadingBug.Models;
+using IncrementalLoadingBug.ViewModels;
+using Microsoft.Toolkit.Uwp;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -12,6 +15,15 @@ namespace IncrementalLoadingBug
     {
         public HomeViewModel ViewModel { get; } = new HomeViewModel();
         public MainPage() => InitializeComponent();
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var collection = new IncrementalLoadingCollection<PeopleSource, Person>();
+
+            PeopleListView.ItemsSource = collection;
+
+        }
 
     }
 }

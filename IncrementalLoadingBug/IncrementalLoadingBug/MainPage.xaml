@@ -7,6 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:IncrementalLoadingBug.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
     <i:Interaction.Behaviors>
@@ -23,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <GridView
@@ -31,15 +33,13 @@
             SelectedItem="{x:Bind ViewModel.AppVM.TopListViewItem, Mode=TwoWay}">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:ModulesConfigurationDto">
-                    <Grid >
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Text="{x:Bind QueryCount}" />
-                        <TextBlock
-                            Grid.Row="1"
-                            Text="{x:Bind DisplayName}" />
+                        <TextBlock Grid.Row="1" Text="{x:Bind DisplayName}" />
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
@@ -50,5 +50,13 @@
             Grid.Row="1"
             Header="{x:Bind ViewModel.AppVM.TopListViewItem.DisplayName}"
             ItemsSource="{x:Bind ViewModel.AppVM.TopListViewItem.Evidences}" />
+
+        <ListView x:Name="PeopleListView" Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Person">
+                    <TextBlock Text="{x:Bind Name}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
