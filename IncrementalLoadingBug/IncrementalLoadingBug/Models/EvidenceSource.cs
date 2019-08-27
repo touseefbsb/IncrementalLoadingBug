@@ -1,7 +1,5 @@
-﻿using IncrementalLoadingBug.Helpers;
-using IncrementalLoadingBug.ViewModels;
+﻿using IncrementalLoadingBug.ViewModels;
 using Microsoft.Toolkit.Collections;
-using Microsoft.Toolkit.Uwp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,9 +16,9 @@ namespace IncrementalLoadingBug.Models
         public EvidencesSource()
         {
             evidences = new List<EvidenceDTO>();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 200; i++)
             {
-                evidences.Add(new EvidenceDTO());
+                evidences.Add(new EvidenceDTO() { NAME = "Name" + i.ToString() });
             }
         }
 
@@ -29,8 +27,7 @@ namespace IncrementalLoadingBug.Models
             await Task.Delay(500); // fake web api call
             var result = (from dto in evidences
                           select dto).Skip(pageIndex * pageSize).Take(pageSize);
-            (AppVM.TopListViewItem.Evidences as IncrementalLoadingCollection<EvidencesSource, EvidenceDTO>)?.AddRange(result);
-            return new List<EvidenceDTO>();
+            return result;
         }
     }
 
@@ -48,7 +45,7 @@ namespace IncrementalLoadingBug.Models
             // Creates an example collection.
             _people = new List<Person>();
 
-            for (int i = 1; i <= 40; i++)
+            for (int i = 1; i <= 200; i++)
             {
                 var p = new Person { Name = "Person " + i };
                 _people.Add(p);

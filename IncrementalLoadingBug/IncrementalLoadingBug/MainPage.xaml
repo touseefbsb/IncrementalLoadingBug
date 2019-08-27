@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -49,9 +50,18 @@
             x:Name="AllEvidencesListView"
             Grid.Row="1"
             Header="{x:Bind ViewModel.AppVM.TopListViewItem.DisplayName}"
-            ItemsSource="{x:Bind ViewModel.AppVM.TopListViewItem.Evidences}" />
-
-        <ListView x:Name="PeopleListView" Grid.Row="2">
+            ItemsSource="{x:Bind ViewModel.AppVM.TopListViewItem.Evidences}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:EvidenceDTO">
+                    <TextBlock Text="{x:Bind NAME}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Border
+            Grid.Row="2"
+            Height="12"
+            Background="Red" />
+        <ListView x:Name="PeopleListView" Grid.Row="3">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Person">
                     <TextBlock Text="{x:Bind Name}" />
